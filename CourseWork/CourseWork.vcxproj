@@ -127,10 +127,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Exception.h" />
+    <ClInclude Include="Iterator.h" />
+    <ClInclude Include="Schedule.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="Train_Info.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Course_Work.cpp" />
+    <ClCompile Include="Exception.cpp" />
+    <ClCompile Include="Iterator.cpp" />
+    <ClCompile Include="Schedule.cpp" />
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="Train_Info.cpp" />
   </ItemGroup>

@@ -2,59 +2,35 @@
 #include <iostream>
 #pragma warning (disable : 4996)
 
-Time::Time(Time&)
+Time::Time(int h, int m, int s)
 {
-	SetHours(0);
-	SetMinutes(0);
-	SetSeconds(0);
-}
-Time::Time( int h,  int m,  int s) {
 	SetHours(h);
 	SetMinutes(m);
 	SetSeconds(s);
 }
-Time::Time(const Time& t )
-{
-	Hours = t.Hours;
-	Minutes = t.Minutes;
-	Seconds = t.Seconds;
-}
-Time::~Time()
-{
-}
-
 void Time::SetHours(int h)
 {
-	if (h >= 0 && h <= 23) {
+	if (h < 0 && h > 23) {
+		throw Exception("");
+	}
 		Hours = h;
-	}
-	else {
-		std::cerr << "Error: Invalid hour value" << std::endl;
-	}
 }
 
 void Time::SetMinutes(int m)
 {
-	if (m >= 0 && m <= 59) {
+	if (m < 0 && m > 59) {
+		throw Exception("");
+	}
 		Minutes = m;
-	}
-	else {
-		std::cerr << "Error: Invalid minute value" << std::endl;
-	}
-
 }
 
 void Time::SetSeconds(int s)
 {
-	if (s >= 0 && s <= 59) {
+	if (s < 0 && s > 59) {
+		throw Exception("");
+	}
 		Seconds = s;
-	}
-	else {
-		std::cerr << "Error: Invalid second value" << std::endl;
-	}
-	
 }
-
 int Time::GetHours()
 {
 	return Hours;
@@ -71,35 +47,29 @@ int Time::GetSeconds()
 }
 Time& Time::operator+=(const Time& t)
 {
-	Seconds += t.Seconds;
-	Minutes += t.Minutes + (Seconds / 60);
-	Hours += t.Hours + (Minutes / 60);
-	Seconds %= 60;
-	Minutes %= 60;
-	Hours %= 24;
+	int total_seconds = Hours * 3600 + Minutes * 60 + Seconds + t.Hours * 3600 + t.Minutes * 60 + t.Seconds;
+	Hours = total_seconds / 3600;
+	Minutes = (total_seconds % 3600) / 60;
+	Seconds = total_seconds % 60;
 	return *this;
 }
 
 Time& Time::operator-=(const Time& t)
 {
-	Seconds -= t.Seconds;
-	if (Seconds < 0) {
-		Seconds += 60;
-		Minutes--;
+	int total_seconds = Hours * 3600 + Minutes * 60 + Seconds - t.Hours * 3600 - t.Minutes * 60 - t.Seconds;
+	if (total_seconds < 0) {
+		total_seconds += 24 * 3600;
 	}
-	Minutes -= t.Minutes;
-	if (Minutes < 0) {
-		Minutes += 60;
-		Hours--;
-	}
-	Hours -= t.Hours;
-	if (Hours < 0) {
-		Hours += 24;
-	}
+	Hours = total_seconds / 3600;
+	Minutes = (total_seconds % 3600) / 60;
+	Seconds = total_seconds % 60;
+	return *this;
 }
 
 Time& Time::operator=(const Time& t)
 {
+	if (this == &t)
+		return *this;
 	Hours = t.Hours;
 	Minutes = t.Minutes;
 	Seconds = t.Seconds;
@@ -107,16 +77,21 @@ Time& Time::operator=(const Time& t)
 
 }
 
-
-
- std::ostream& operator<<(std::ostream &out,  Time& t)
-{
-	out << t.GetHours() << ":" << t.GetMinutes() << ":" << t.GetSeconds();
-	return out;
-
+std::istream& operator>>(std::istream& in, Time& t)
+{		
+		in.ignore();
+		std::cout << "Enter a hour:\n";
+		in >> t.Hours;
+		std::cout << "Enter a minute: \n";
+		in >> t.Minutes;
+		std::cout << "Enter a second: \n";
+		in >> t.Seconds;
+		in.clear();
+		return in;
 }
- std::istream& operator>>(std::istream& in, Time& t)
- {
-	 in >> t.GetHours() >> t.Minutes >> t.Seconds;// повернутись до того
-	 return in;
- }
+
+std::ostream& operator<<(std::ostream& out, Time& t)
+{
+			out << "Hour: " << t.Hours << "\nMinute: " << t.Minutes << "\nSecond: " << t.Seconds << std::endl;
+			return out;
+}

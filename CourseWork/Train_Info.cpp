@@ -1,20 +1,23 @@
 #include "Train_Info.h"
 #include "Time.h"
-Train_Info::Train_Info(int h = 0, int m = 0, int s = 0, int p = 0,const char* dest = "", const char* dept = "") : Time(h, m, s) {
+Train_Info::Train_Info():Destination(NULL),Platform(0)
+{
+
+}
+Train_Info::Train_Info(char* d, int p , int h , int m,int s) : Time(h, m, s) {
+    Destination = new char[strlen(Destination)];
+    strcpy(Destination, d);
     Platform = p;
-    strcpy(Destination, dest);
-    strcpy(Departure, dept);
 }
 
-Train_Info::Train_Info(const Train_Info& t) : Time(t)
-{
+Train_Info::Train_Info(const Train_Info& t) {
+    Destination = new char[strlen(t.Destination) ];
     Platform = t.Platform;
-    strcpy(Destination, t.Destination);
-    strcpy(Departure, t.Departure);
 }
 
 Train_Info::~Train_Info()
 {
+    delete[]Destination;
 }
 
 void Train_Info::SetPlatform(int p)
@@ -22,9 +25,10 @@ void Train_Info::SetPlatform(int p)
     Platform = p;
 }
 
-void Train_Info::SetDestination(const char* dest)
+void Train_Info::SetDestination(const char* d)
 {
-    strcpy(Destination, dest);
+    Destination = new char[strlen(d) ];
+    strcpy(Destination, d);
 }
 
 int Train_Info::GetPlatform()
@@ -37,15 +41,25 @@ char* Train_Info::GetDestination()
     return Destination;
 }
 
-void Train_Info::SetDeparture(const char* depar)
+std::istream& operator>>(std::istream& in, Train_Info& tr)
 {
-    strcpy(Departure, depar);
+    in.ignore();
+    std::cout << ":\n";
+    in.getline(tr.Destination,256);
+    std::cout << " :\n";
+    in >> tr.Platform;
+    std::cout << " :\n";
+    in >> tr.Hours;
+    std::cout << " :\n";
+    in >> tr.Minutes;
+    std::cout << " :\n";
+    in >> tr.Seconds;
+    std::cout << " :\n";
+    return in;
 }
 
-
-char* Train_Info::GetDeparture()
+std::ostream& operator<<(std::ostream& out, const Train_Info& tr)
 {
-   return Departure;
+    out << "Destination :" << tr.Destination << "\nPlatform: " << tr.Platform << "\nHour: " << tr.Hours << "\nMinute: " << tr.Minutes << "\nSecond: " << tr.Seconds << std::endl;
+    return out;
 }
-
-
