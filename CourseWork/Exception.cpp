@@ -7,7 +7,6 @@ Exception::Exception(const char* m) {
 	strcpy(Info, m);
 }
 Exception::~Exception() {
-
 }
 char* Exception::ShowException() {
 	return Info;

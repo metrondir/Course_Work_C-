@@ -1,0 +1,12 @@
+====================================
+Destination :Lviv
+Platform: 1
+Hour: 2
+Minute: 3
+Second: 4
+====================================
+Destination :Lviv
+Platform: 2
+Hour: 1
+Minute: 3
+Second: 4

@@ -1,76 +1,81 @@
 #include "Schedule.h"
+#include <iostream>
 
-Schedule::Schedule(void)
+Schedule::Schedule()
 {
-	pTrain = new Train_Info[0];
+	pTrain = new Train_Info[Count];
 	Count = 0;
-	uiPosition = 0;
 }
+
 Schedule::Schedule(int nCount)
 {
 	Count = nCount;
-	uiPosition = 0;
 	pTrain = new Train_Info[nCount];
-
 }
+
 Schedule::~Schedule(void)
 {
-	if (pTrain)
-		delete[]pTrain;
+	delete[]pTrain;
 }
+
 void Schedule::Input()
 {
 	for (int i = 0; i < Count; i++)
-	{
-		std::cout << "List ¹" << i + 1 << std::endl;
-		std::cin >> *(pTrain + i);
-	}
+		std::cin >> pTrain[i];	
 }
-Train_Info* Schedule::GetTrain()
+
+void Schedule::SetSizeOfSchedule(unsigned int value)
 {
-	return pTrain;
-}
-int Schedule::GetCount()
-{
-	return Count;
+	if (value == 0)
+		throw Exception("Error typing size of Schedule! It is not integer");
+	Count = value;
+	pTrain = new Train_Info[Count];
 }
 
 void Schedule::Show()
 {
-	std::cout << std::endl;
-	std::cout << "Schedule " << std::endl;
-	for (int i = 0; i < Count; i++)
-		std::cout << *(pTrain + i);
-}
-void Schedule::Find(char* _punkt)
-{
-	for (int i = 0; i < Count; i++)
-	{
-		if (strcmp(pTrain[i].GetDestination(), _punkt) == 0)
-		{
-			std::cout << pTrain[i] << std::endl;
-		}
-		else
-		{
-			std::cout << "There is no train to the given point " << std::endl;
+	if (BeginOfSchedule() != EndOfSchedule()) {
+		for (Iterator it = BeginOfSchedule(); it != EndOfSchedule(); it++) {
+			if (strcmp((*it).GetDestination(), "Unknown") == 0) {
+				break;
+			}
+			else {
+				std::cout << *it << std::endl;
+			}
 		}
 	}
+	else {
+		throw Exception("Empty schedule\n");
+	}
+}
 
-}
-Train_Info* Schedule::begin()
+void Schedule::Find(const char* destination)
 {
-	if (pTrain == NULL || Count <= 0)
-	{
-		throw Exception("There are no trains yet");
-	}
-	uiPosition = 0;
-	return pTrain;
+		bool found_train = false;
+		int earliest_time = INT_MAX;
+		int count = 0;
+			for (int i = 0; i < Count; i++)
+			{
+				if (strcmp(pTrain[i].GetDestination(), destination) == 0)
+				{
+					int departure_time = pTrain[i].GetHours() * 3600 + pTrain[i].GetMinutes() * 60 + pTrain[i].GetSeconds();
+
+					if (departure_time < earliest_time)
+					{
+						earliest_time = departure_time;
+						count = i;
+						found_train = true;
+					}
+				}
+			}
+			if (!found_train)
+			{
+				throw Exception("No train was found to the destination.");
+			}		
+		if (found_train)
+		{
+			Train_Info finder = pTrain[count];
+			std::cout << "The earliest train to " << destination << " is: \n" << finder << std::endl;
+		}
 }
-Train_Info* Schedule::end()
-{
-	if (pTrain == NULL || Count <= 0)
-	{
-		throw Exception("There are no other trains");
-	}
-	return pTrain + Count;
-}
+
