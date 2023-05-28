@@ -17,13 +17,15 @@ protected:
 		void SetMinutes(int m);
 		void SetSeconds(int s);
 
-		 virtual char* GetTime();
+		 virtual char* GetTime() ;
 		 int GetHours();
 		 int GetMinutes();
 		 int GetSeconds();
 
 		Time& operator+=(const Time& t);
+		Time& operator+=(int seconds);
 		Time& operator-=(const Time& t);
+		Time& operator-=(int seconds);
 		Time& operator=(const Time& t);
 		friend std::istream& operator>>(std::istream& in, Time& t);
 

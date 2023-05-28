@@ -19,7 +19,7 @@ public:
 
 	int GetPlatform();
 	char* GetDestination();
-	char* GetTime();
+	char* GetTime() override;
 	friend std::istream& operator>>(std::istream& in, Train_Info& tr);
 	friend std::ostream& operator<<(std::ostream& out, const Train_Info& tr);
 };

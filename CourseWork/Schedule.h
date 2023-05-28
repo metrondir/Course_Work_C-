@@ -11,7 +11,7 @@ public:
 	void Input();
 	void SetSizeOfSchedule(unsigned int value);
 	void Show();
-	virtual ~Schedule();
+	 ~Schedule();
 	
 	void Find(const char*);
 	Iterator BeginOfSchedule() { return pTrain; }

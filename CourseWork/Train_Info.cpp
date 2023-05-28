@@ -31,7 +31,7 @@ Train_Info::~Train_Info()
 void Train_Info::SetPlatform(int p)
 {
     if (p <= 0) {
-        throw Exception("Invalid platform value\n");
+        throw Exception("Invalid platform value");
     }
     Platform = p;
 }
@@ -54,9 +54,7 @@ char* Train_Info::GetDestination()
 
 char* Train_Info::GetTime()
 {
-    if (strcmp(Destination, "Unknown") == -1) {
-        std::cout << "Destination: " << GetDestination() << " Platform: " << GetPlatform() << " Time:" << GetHours() << ":" << GetMinutes() << ":" << GetSeconds() << std::endl;
-    }
+    std::cout << "Destination: " << GetDestination() << " Platform: " << GetPlatform() << " Time:" << GetHours() << ":" << GetMinutes() << ":" << GetSeconds() << std::endl;
     return nullptr;  
 }
 
