@@ -3,8 +3,8 @@
 #include "Iterator.h"
 class Schedule 
 {
-	Train_Info* pTrain;
-	int Count;
+	Train_Info* trains;
+	int count;
 public:
 	Schedule();
 	Schedule(int);
@@ -13,8 +13,8 @@ public:
 	void Show();
 	 ~Schedule();
 	
-	void Find(const char*);
-	Iterator BeginOfSchedule() { return pTrain; }
-	Iterator EndOfSchedule() { return pTrain + Count; }
+	void FindNearestTrain(const char*);
+	Iterator BeginOfSchedule() { return trains; }
+	Iterator EndOfSchedule() { return trains+ count; }
 };
 

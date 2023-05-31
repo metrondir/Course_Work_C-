@@ -4,9 +4,9 @@
 #include<iostream>
 
 class Train_Info : public Time {
-protected:
-	char* Destination;
-	int Platform;
+private:
+	char* destination;
+	int platform;
 
 public:
 	Train_Info();

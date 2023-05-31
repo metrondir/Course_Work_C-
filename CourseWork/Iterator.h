@@ -4,9 +4,9 @@
 class Iterator
 {
 protected:
-	Train_Info* Buffer;
+	Train_Info* buffer;
 public:
-	Iterator(Train_Info* pTrain);
+	Iterator(Train_Info* trains);
 	~Iterator();
 
 	Train_Info& operator++(int);

@@ -1,7 +1,7 @@
 #include "Iterator.h"
 #include "Exception.h"
 #include "Schedule.h"
-Iterator::Iterator(Train_Info* p) :Buffer(p) {
+Iterator::Iterator(Train_Info* p) :buffer(p) {
 }
 
 Iterator::~Iterator() {
@@ -9,29 +9,29 @@ Iterator::~Iterator() {
 }
 Train_Info& Iterator::operator++(int)
 {
-	return *Buffer++;
+	return *buffer++;
 }
 
 Train_Info& Iterator::operator+=(int value)
 {
-	return *(Buffer += value);
+	return *(buffer += value);
 }
 Train_Info Iterator::operator*()
 {
-	return *Buffer;
+	return *buffer;
 }
 bool Iterator::operator!=(const Iterator& value)
 {
-	return Buffer != value.Buffer;
+	return buffer != value.buffer;
 }
 
 bool Iterator::operator>=(const Iterator& value)
 {
-	return Buffer >= value.Buffer;
+	return buffer >= value.buffer;
 }
 
 bool Iterator::operator<=(const Iterator& value)
 {
-	return Buffer<=value.Buffer;
+	return buffer<=value.buffer;
 }
 

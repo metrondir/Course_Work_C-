@@ -63,7 +63,7 @@ int main()
 			try {
 				std::cout << "Enter Destination: " << std::endl;
 				std::cin >> destination;
-				schedule.Find(destination);
+				schedule.FindNearestTrain(destination);
 			}
 			catch (Exception e) {
 				std::cerr << "Exception: " << e.ShowException() << std::endl;

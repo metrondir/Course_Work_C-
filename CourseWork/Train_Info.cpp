@@ -3,18 +3,18 @@
 #pragma warning(disable : 4996)
 
 Train_Info::Train_Info(char* d, int p , int h , int m,int s) : Time(h, m, s) {
-    SetDestination("Unknown");
-    Platform = p;
+    SetDestination(d);
+    SetPlatform(p);
 }
 
 Train_Info::Train_Info(const Train_Info& train)
 {
-    Destination = new char[strlen(train.Destination) + 1];
-    strcpy(Destination, train.Destination);
-    Hours = train.Hours;
-    Minutes = train.Minutes;
-    Seconds = train.Seconds;
-    Platform = train.Platform;  
+    destination = new char[strlen(train.destination) + 1];
+    strcpy(destination, train.destination);
+    hours = train.hours;
+    minutes = train.minutes;
+    seconds = train.seconds;
+    platform = train.platform;  
 }
 
 Train_Info::Train_Info()
@@ -25,7 +25,7 @@ Train_Info::Train_Info()
 
 Train_Info::~Train_Info()
 {
-    delete[] Destination;
+    delete[] destination;
 }
 
 void Train_Info::SetPlatform(int p)
@@ -33,23 +33,23 @@ void Train_Info::SetPlatform(int p)
     if (p <= 0) {
         throw Exception("Invalid platform value");
     }
-    Platform = p;
+    platform = p;
 }
 
 void Train_Info::SetDestination(const char* d)
 {
-    Destination = new char[strlen(d) +1];
-    strcpy(Destination, d);
+    destination = new char[strlen(d) +1];
+    strcpy(destination, d);
 }
 
 int Train_Info::GetPlatform()
 {
-    return Platform;
+    return platform;
 }
 
 char* Train_Info::GetDestination()
 {
-    return Destination;
+    return destination;
 }
 
 char* Train_Info::GetTime()
@@ -63,7 +63,7 @@ std::istream& operator>>(std::istream& in, Train_Info& tr)
     bool flag = true;
     while (flag) {
         char input[256];
-        std::cout << "Enter Destination: \n";
+        std::cout << "Enter destination: \n";
         in >> input;
         try {
             bool hasNumericCharacters = false;
@@ -93,7 +93,7 @@ std::istream& operator>>(std::istream& in, Train_Info& tr)
     flag = true;
     while (flag) {
         char input[256];
-        std::cout << "Enter Platform: \n";
+        std::cout << "Enter platform: \n";
         in >> input;
         try {
             char* endPtr;
@@ -118,7 +118,7 @@ std::istream& operator>>(std::istream& in, Train_Info& tr)
     flag = true;
     while (flag) {
         char input[256];
-        std::cout << "Enter Hours: \n";
+        std::cout << "Enter hours: \n";
         in >> input;
         try {
             char* endPtr;
@@ -144,7 +144,7 @@ std::istream& operator>>(std::istream& in, Train_Info& tr)
     flag = true;
     while (flag) {
         char input[256];
-        std::cout << "Enter Minutes: \n";
+        std::cout << "Enter minutes: \n";
         in >> input;
         try {
             char* endPtr;
@@ -168,7 +168,7 @@ std::istream& operator>>(std::istream& in, Train_Info& tr)
     flag = true;
     while (flag) {
         char input[256];
-        std::cout << "Enter Seconds: \n";
+        std::cout << "Enter seconds: \n";
         in >> input;
         try {
             char* endPtr;
@@ -195,13 +195,13 @@ std::istream& operator>>(std::istream& in, Train_Info& tr)
 std::ostream& operator<<(std::ostream& out, const Train_Info& tr)
 {
     try {
-        if (strcmp(tr.Destination, "Unknown") ==0) {
+        if (strcmp(tr.destination, "Unknown") ==0) {
             throw Exception("Empty Train");
         }
         else
         {
             out << "====================================" << std::endl;
-            out << "Destination :" << tr.Destination << "\nPlatform: " << tr.Platform << "\nHour: " << tr.Hours << "\nMinute: " << tr.Minutes << "\nSecond: " << tr.Seconds << std::endl;
+            out << "Destination :" << tr.destination << "\nPlatform: " << tr.platform << "\nHour: " << tr.hours << "\nMinute: " << tr.minutes << "\nSecond: " << tr.seconds << std::endl;
         }
     }
     catch (Exception ex) {

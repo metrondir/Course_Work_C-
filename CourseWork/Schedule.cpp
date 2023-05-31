@@ -3,33 +3,33 @@
 
 Schedule::Schedule()
 {
-	pTrain = new Train_Info[Count];
-	Count = 0;
+	trains= new Train_Info[count];
+	count = 0;
 }
 
 Schedule::Schedule(int nCount)
 {
-	Count = nCount;
-	pTrain = new Train_Info[nCount];
+	count = nCount;
+	trains= new Train_Info[nCount];
 }
 
 Schedule::~Schedule(void)
 {
-	delete[]pTrain;
+	delete[]trains;
 }
 
 void Schedule::Input()
 {
-	for (int i = 0; i < Count; i++)
-		std::cin >> pTrain[i];	
+	for (int i = 0; i < count; i++)
+		std::cin >> trains[i];	
 }
 
 void Schedule::SetSizeOfSchedule(unsigned int value)
 {
 	if (value == 0)
 		throw Exception("Error typing size of Schedule! It is not integer");
-	Count = value;
-	pTrain = new Train_Info[Count];
+	count = value;
+	trains= new Train_Info[count];
 }
 
 void Schedule::Show()
@@ -49,16 +49,16 @@ void Schedule::Show()
 	}
 }
 
-void Schedule::Find(const char* destination)
+void Schedule::FindNearestTrain(const char* destination)
 {
 		bool found_train = false;
 		int earliest_time = INT_MAX;
 		int count = 0;
-			for (int i = 0; i < Count; i++)
+			for (int i = 0; i < count; i++)
 			{
-				if (strcmp(pTrain[i].GetDestination(), destination) == 0)
+				if (strcmp(trains[i].GetDestination(), destination) == 0)
 				{
-					int departure_time = pTrain[i].GetHours() * 3600 + pTrain[i].GetMinutes() * 60 + pTrain[i].GetSeconds();
+					int departure_time = trains[i].GetHours() * 3600 + trains[i].GetMinutes() * 60 + trains[i].GetSeconds();
 
 					if (departure_time < earliest_time)
 					{
@@ -74,7 +74,7 @@ void Schedule::Find(const char* destination)
 			}		
 		if (found_train)
 		{
-			Train_Info finder = pTrain[count];
+			Train_Info finder = trains[count];
 			std::cout << "The earliest train to " << destination << " is: \n" << finder << std::endl;
 		}
 }
